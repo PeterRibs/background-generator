@@ -2,64 +2,50 @@ var css = document.querySelector("h3");
 var color1 = document.querySelector(".color1");
 var color2 = document.querySelector(".color2");
 var body = document.getElementById("gradient");
-var randomColor = document.querySelector(".randomColor");
+var ran = document.querySelector("button");
 
-console.log(body);
-console.log(css);
-console.log(color1);
-console.log(color2);
-console.log(randomColor);
 
-css.textContent = "linear-gradient(to right, " + color1.value + ", " + color2.value + ")";
+function setGradient() {
+	body.style.background = 
+	"linear-gradient(to right, " 
+	+ color1.value 
+	+ ", " 
+	+ color2.value 
+	+ ")";
 
-// body.style.background = "red";
-
-// color1.addEventListener("input", function() {
-//     // console.log(color1.value);
-//     body.style.background = "linear-gradient(to right, " + color1.value + ", " + color2.value + ")";
-// })
-
-// color2.addEventListener("input", function() {
-//     // console.log(color2.value);
-//     body.style.background = "linear-gradient(to right, " + color1.value + ", " + color2.value + ")";
-// })
-
-// deixando o script mais limpo
-function backColor() {
-    body.style.background = "linear-gradient(to right, " + color1.value + ", " + color2.value + ")";
-
-    css.textContent = body.style.background + ";"; // adiciona conteúdo de texto.  
+	css.textContent = body.style.background + ";";
 }
 
-// criando uma array com valores aleatorios
-function backColor_rand () {
-    var numb = [
-        Math.floor(Math.random()*255),
-        Math.floor(Math.random()*255),
-        Math.floor(Math.random()*255) 
-    ]
-    console.log(numb[0], numb[1], numb[2]);
-
-    var numb2 = [
-        Math.floor(Math.random()*255),
-        Math.floor(Math.random()*255),
-        Math.floor(Math.random()*255) 
-    ]
-    console.log(numb2[0], numb2[1], numb2[2]);
-    
-    var color1 = "rgb(" + numb[0] + ", " + numb[1] + ", " + numb[2] + ")";
-
-    var color2 = "rgb(" + numb2[0] + ", " + numb2[1] + ", " + numb2[2] + ")";
-    console.log("linear-gradient(to right, " + color1 + ", " + color2 + ")");
-    body.style.background = "linear-gradient(to right, " + color1 + ", " + color2 + ")";
-
-    css.textContent = body.style.background + ";";
+function randomColor(length) {
+    var result           = "#"+'';
+    var characters       = 'abcdef0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
 }
 
-// outra maneira de fazer isso é colocando um "oninput" ou "onclick" no html. No entanto, no html só pode ter uma atributo "oninput" e colocando no js podemos adicionar varios funções e evenos diferentes portanto mais extensível.
+function randomBG(){
+	var rand_l = randomColor(6);
+	var rand_r = randomColor(6);
 
-color1.addEventListener("input", backColor);
+	color1.value = rand_l;
+	color2.value = rand_r; 
 
-color2.addEventListener("input", backColor);
+	body.style.background = 
+	"linear-gradient(to right, " 
+	+  rand_l +  ", " + rand_r + ")";
 
-randomColor.addEventListener("click", backColor_rand);
+	css.textContent = body.style.background + ";";
+}
+
+
+css.textContent =  "linear-gradient(to right, " + color1.value + ", " + color2.value + ")"+ ";";
+
+ran.addEventListener("click", randomBG);
+
+color1.addEventListener("input", setGradient);
+
+color2.addEventListener("input", setGradient);
